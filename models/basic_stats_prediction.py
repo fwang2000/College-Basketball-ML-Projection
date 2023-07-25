@@ -60,16 +60,46 @@ preprocessor = make_column_transformer(
 
 preprocessor.fit_transform(X_train)
 
+# After hyperparameter tuning, Logistic Regression produced the best score
+# although the scores were generally really low. LR still barely outscored
+# the Dummy Classifier. The other models tested are listed below.
+
+pipe_lr = make_pipeline(preprocessor, OneVsRestClassifier(LogisticRegression()))
+param_dict_lr = {"onevsrestclassifier__estimator__C": loguniform(1e-3, 1e3)}
+best_model_lr = RandomizedSearchCV(pipe_lr, param_dict_lr, n_jobs=-1, cv=4, return_train_score=True, random_state=123)
+best_model_lr.fit(X_train, y_train)
+results_lr = pd.DataFrame(best_model_lr.cv_results_)[
+    [
+        "mean_test_score",
+        "mean_train_score",
+        "param_onevsrestclassifier__estimator__C",
+        "mean_fit_time",
+        "rank_test_score",
+    ]
+].set_index("rank_test_score").sort_index().T
+
+print("model score:")
+print(best_model_lr.score(X_test, y_test))
+
+'''
+rank_test_score                                1          2          2   ...        8         9         10
+mean_test_score                          0.349236   0.344474   0.344474  ...  0.327853  0.325449  0.323068
+mean_train_score                         0.372139   0.391928   0.391928  ...  0.383218  0.384803  0.384798
+param_onevsrestclassifier__estimator__C  0.022967  15.094374  20.740242  ...    0.0521  0.345652  0.225271
+mean_fit_time                            0.040408    0.04179   0.042996  ...  0.040655  0.039471   0.03516
+'''
+
+'''
 pipe_dummy = make_pipeline(preprocessor, OneVsRestClassifier(DummyClassifier()))
 results_dummy = mean_std_cross_val_scores(pipe_dummy, X_train, y_train, return_train_score=True)
 
-'''
 fit_time       0.007 (+/- 0.001)
 score_time     0.003 (+/- 0.000)
 test_score     0.349 (+/- 0.007)
 train_score    0.349 (+/- 0.002)
 '''
 
+'''
 pipe_dt = make_pipeline(preprocessor, OneVsRestClassifier(DecisionTreeClassifier()))
 param_dict_dt = {"onevsrestclassifier__estimator__max_depth": np.arange(1, 28, 2)}
 best_model_dt = RandomizedSearchCV(pipe_dt, param_dict_dt, n_jobs=-1, cv=4, return_train_score=True, random_state=123)
@@ -85,7 +115,6 @@ results_dt = pd.DataFrame(best_model_dt.cv_results_)[
     ]
 ].set_index("rank_test_score").sort_index().T
 
-'''
 rank_test_score                                        1         2         3   ...        8         9         10
 mean_test_score                                  0.308738  0.303863   0.28504  ...  0.247058  0.244654  0.244632
 mean_train_score                                 0.402208  0.519367       1.0  ...  0.802009   0.97227  0.917649
@@ -93,6 +122,7 @@ param_onevsrestclassifier__estimator__max_depth         1         3        23  .
 mean_fit_time                                     0.02422  0.028316  0.051658  ...   0.04403  0.059817   0.05212
 '''
 
+'''
 pipe_svm = make_pipeline(preprocessor, OneVsRestClassifier(SVC()))
 param_dict_svm = {
     "onevsrestclassifier__estimator__C": loguniform(1e-3, 1e3),
@@ -111,7 +141,6 @@ results_svm = pd.DataFrame(best_model_svm.cv_results_)[
     ]
 ].set_index("rank_test_score").sort_index().T
 
-'''
 rank_test_score                                    1          1           3   ...         8         9         10
 mean_test_score                               0.33969    0.33969     0.31597  ...   0.242251  0.161478  0.130615
 mean_train_score                                  1.0        1.0         1.0  ...   0.811563  0.209024   0.20426
@@ -120,28 +149,7 @@ param_onevsrestclassifier__estimator__gamma  23.67545  26.789983   12.852228  ..
 mean_fit_time                                0.078559   0.086506    0.081414  ...   0.063902  0.038903  0.040432
 '''
 
-pipe_lr = make_pipeline(preprocessor, OneVsRestClassifier(LogisticRegression()))
-param_dict_lr = {"onevsrestclassifier__estimator__C": loguniform(1e-3, 1e3)}
-best_model_lr = RandomizedSearchCV(pipe_lr, param_dict_lr, n_jobs=-1, cv=4, return_train_score=True, random_state=123)
-best_model_lr.fit(X_train, y_train)
-results_lr = pd.DataFrame(best_model_lr.cv_results_)[
-    [
-        "mean_test_score",
-        "mean_train_score",
-        "param_onevsrestclassifier__estimator__C",
-        "mean_fit_time",
-        "rank_test_score",
-    ]
-].set_index("rank_test_score").sort_index().T
-
 '''
-rank_test_score                                1          2          2   ...        8         9         10
-mean_test_score                          0.349236   0.344474   0.344474  ...  0.327853  0.325449  0.323068
-mean_train_score                         0.372139   0.391928   0.391928  ...  0.383218  0.384803  0.384798
-param_onevsrestclassifier__estimator__C  0.022967  15.094374  20.740242  ...    0.0521  0.345652  0.225271
-mean_fit_time                            0.040408    0.04179   0.042996  ...  0.040655  0.039471   0.03516
-'''
-
 pipe_rf = make_pipeline(preprocessor, OneVsRestClassifier(RandomForestClassifier()))
 rf_max_depth = [int(x) for x in np.linspace(10, 110, num = 11)]
 rf_max_depth.append(None)
@@ -164,7 +172,6 @@ results_rf = pd.DataFrame(best_model_rf.cv_results_)[
     ]
 ].set_index("rank_test_score").sort_index().T
 
-'''
 rank_test_score                                            1          2          3   ...         8         9          10
 mean_test_score                                      0.282682   0.282682   0.282659  ...    0.27792  0.277875     0.2708 
 mean_train_score                                          1.0        1.0        1.0  ...        1.0       1.0        1.0 
@@ -173,3 +180,4 @@ param_onevsrestclassifier__estimator__max_features       log2       sqrt       s
 param_onevsrestclassifier__estimator__max_depth            90         20        110  ...         50        60         20 
 mean_fit_time                                       10.760844  31.583362  33.067003  ...  42.481819  53.12086  14.712059 
 '''
+
