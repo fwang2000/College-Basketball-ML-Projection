@@ -9,3 +9,10 @@
 	background-position: center;
 	display:block;
 }
+
+.landing-grid {
+
+	justify-content: space-evenly;
+	align-items: center;
+	min-height: 100vh;
+}
