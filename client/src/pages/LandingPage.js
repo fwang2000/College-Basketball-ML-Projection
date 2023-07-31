@@ -1,36 +1,50 @@
 import '../assets/css/LandingPage.css'
-import { Grid, Divider, Container } from '@mui/material';
+import logo from '../assets/images/logo.png'
+import { Button, Container, Grid, useTheme } from '@mui/material'
 
 function LandingPage() {
-    return(
-        <header className="landing">
-            <div className="content">
-                <Grid 
-                    container
-                    direction={'row'}
-                    justifyContent={'space-evenly'}
-                    alignItems={'center'}
-                    style={{ minHeight: '100vh' }}
-                >
-                    <Grid item>
-                        <Container>
-                            <img></img>
-                            <h1>NBA ASCEND</h1>
-                            <h4>A machine-learning approach to finding the next superstar</h4>
-                        </Container>
-                    </Grid>
-                    <Divider
-                        orientation='vertical'
-                        variant='middle'
-                        flexItem
-                        style={{ borderColor: '#FFF', marginTop: '30vh', marginBottom: '30vh' }}
-                    />
-                    <Grid item>
 
-                    </Grid>
+    const theme = useTheme();
+
+    return(
+        <section className='landing'>
+            <Grid
+                container
+                direction={'column'}
+                justifyContent={'space-evenly'}
+                alignItems={'center'}
+                minHeight={'50vh'}
+            >
+                <Grid item align="center">
+                    <Container>
+                        <img src={logo} alt='logo' width={'40%'}></img>
+                    </Container>
                 </Grid>
-            </div>
-      </header>
+                <Grid item>
+                    <Container>
+                        <h2>FIND THE NEXT NBA SUPERSTAR</h2>
+                    </Container>
+                </Grid>
+                <Grid item>
+                    <Container>
+                        <Grid
+                            container
+                            direction={'row'}
+                            justifyContent={'space-evenly'}
+                            alignItems={'center'}
+                            spacing={5}
+                        >
+                            <Grid item>
+                                <Button variant='contained'>Latest Model</Button>
+                            </Grid>
+                            <Grid item>
+                                <Button variant='contained'>Learn More</Button>
+                            </Grid>
+                        </Grid>
+                    </Container>
+                </Grid>
+            </Grid>
+        </section>
     )
 }
 
