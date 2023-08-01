@@ -1,7 +1,8 @@
 function NavigationMenu() {
-    
+
     return(
-        <div></div>
+        <Box><p>hello</p></Box>
+        
     )
 }
 

@@ -1,6 +1,6 @@
 import '../assets/css/LandingPage.css'
 import logo from '../assets/images/logo.png'
-import { Button, Container, Grid, useTheme } from '@mui/material'
+import { Button, Container, Grid, Typography, useTheme } from '@mui/material'
 
 function LandingPage() {
 
@@ -14,15 +14,17 @@ function LandingPage() {
                 justifyContent={'space-evenly'}
                 alignItems={'center'}
                 minHeight={'50vh'}
+                spacing={5}
+                marginTop={'5vh'}
             >
                 <Grid item align="center">
                     <Container>
-                        <img src={logo} alt='logo' width={'40%'}></img>
+                        <img src={logo} alt='logo' width={'35%'}></img>
                     </Container>
                 </Grid>
                 <Grid item>
                     <Container>
-                        <h2>FIND THE NEXT NBA SUPERSTAR</h2>
+                        <Typography variant={'subtitle1'}>FIND THE NEXT NBA SUPERSTAR</Typography>
                     </Container>
                 </Grid>
                 <Grid item>
@@ -32,13 +34,27 @@ function LandingPage() {
                             direction={'row'}
                             justifyContent={'space-evenly'}
                             alignItems={'center'}
-                            spacing={5}
+                            spacing={6}
                         >
                             <Grid item>
-                                <Button variant='contained'>Latest Model</Button>
+                                <Button 
+                                    variant='contained' 
+                                    size='large'
+                                    color='primary'
+                                    sx={{fontSize:'1em'}}
+                                >
+                                    Latest Model
+                                </Button>
                             </Grid>
                             <Grid item>
-                                <Button variant='contained'>Learn More</Button>
+                                <Button 
+                                    variant='contained' 
+                                    size='large'
+                                    color='secondary'
+                                    style={{fontSize:'1em'}}
+                                >
+                                    Learn More
+                                </Button>
                             </Grid>
                         </Grid>
                     </Container>
