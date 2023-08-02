@@ -1,10 +1,14 @@
 import './App.css';
 
 import LandingPage from "./pages/LandingPage"
+import AboutPage from './pages/AboutPage';
+import ModelPage from './pages/ModelPage';
 import NavigationBar from './components/Navigation/NavigationBar';
 
 import { Route, Routes } from 'react-router-dom';
 import { responsiveFontSizes, createTheme, ThemeProvider } from '@mui/material/styles';
+import MethodologyPage from './pages/MethodologyPage';
+import AuthorPage from './pages/AuthorPage';
 
 const theme = responsiveFontSizes(createTheme({
     components: {
@@ -16,7 +20,7 @@ const theme = responsiveFontSizes(createTheme({
             textTransform: 'none'
           }
         }
-      }
+      },
     },
     palette: {
       primary: {
@@ -27,9 +31,13 @@ const theme = responsiveFontSizes(createTheme({
       }
     },
     typography: {
+      h4: {
+        fontFamily: 'IBM_Plex_Mono_Semi_Bold',
+        fontSize: '14px'
+      },
       subtitle1: {
         fontFamily: 'IBM_Plex_Mono_Light',
-        fontSize: '20vh',
+        fontSize: '20px',
         letterSpacing: '0.1em'
       },
     }
@@ -42,6 +50,10 @@ function App() {
         <NavigationBar/>
         <Routes>
           <Route path="/" element={<LandingPage/>}></Route>
+          <Route path="/about" element={<AboutPage/>}></Route>
+          <Route path="/model" element={<ModelPage/>}></Route>
+          <Route path="/methodology" element={<MethodologyPage/>}></Route>
+          <Route path="/author" element={<AuthorPage/>}></Route>
         </Routes>
       </ThemeProvider>
     </div>

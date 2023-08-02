@@ -1,21 +1,32 @@
-import { AppBar, Grid } from "@mui/material";
-import Logo from "../Logo/Logo";
+import { AppBar, Grid, useTheme } from "@mui/material";
 
-const NAV_LOGO_WIDTH = '8%';
+import Logo from "../Logo/Logo";
+import NavigationMenu from "./NavigationMenu";
+import GithubLogoIcon from "../Logo/GithubLogo";
+
+const NAV_LOGO_WIDTH = '40%';
 
 function NavigationBar() {
+
+    const theme = useTheme()
     
     return(
         <AppBar color="transparent" elevation={0}>
-            <Grid container columns={3} justifyContent={'space-between'}>
-                <Grid item>
+            <Grid 
+                container
+                direction={'row'}
+                justifyContent={'space-evenly'}
+                alignItems={'start'}
+                paddingTop={'1.5%'}
+            >
+                <Grid item xs={2}>
                     <Logo width={NAV_LOGO_WIDTH}/>
                 </Grid>
-                <Grid item>
-                    
+                <Grid item color={'white'} xs={8}>
+                    <NavigationMenu/>
                 </Grid>
-                <Grid item>
-
+                <Grid item xs={2}>
+                    <GithubLogoIcon/>
                 </Grid>
             </Grid>
         </AppBar>
