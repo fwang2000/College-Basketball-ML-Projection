@@ -1,4 +1,4 @@
-import { AppBar, Grid, useTheme } from "@mui/material";
+import { AppBar, Grid } from "@mui/material";
 
 import Logo from "../Logo/Logo";
 import NavigationMenu from "./NavigationMenu";
@@ -7,8 +7,6 @@ import GithubLogoIcon from "../Logo/GithubLogo";
 const NAV_LOGO_WIDTH = '40%';
 
 function NavigationBar() {
-
-    const theme = useTheme()
     
     return(
         <AppBar color="transparent" elevation={0}>

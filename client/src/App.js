@@ -31,6 +31,10 @@ const theme = responsiveFontSizes(createTheme({
       }
     },
     typography: {
+      h1: {
+        fontFamily: 'IBM_Plex_Mono_Bold',
+        fontSize: '50px'
+      },
       h4: {
         fontFamily: 'IBM_Plex_Mono_Semi_Bold',
         fontSize: '14px'
@@ -40,6 +44,11 @@ const theme = responsiveFontSizes(createTheme({
         fontSize: '20px',
         letterSpacing: '0.1em'
       },
+      p: {
+        fontFamily: 'IBM_Plex_Mono_Regular',
+        fontSize: '16px',
+        letterSpacing:'0.1em'
+      }
     }
 }))
 
