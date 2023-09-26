@@ -29,7 +29,7 @@ function NavigationMenu() {
             </Grid>
             <Grid item xs={1}>
                 <Typography variant="h4" textAlign={'center'}>
-                    <Link className="MuiLink" to="/model">
+                    <Link className="MuiLink" to="/search">
                         TRY IT
                     </Link>
                 </Typography>
